@@ -2,7 +2,7 @@ import "./App.css";
 import styled from "styled-components";
 import { BsSuitHeartFill } from "react-icons/bs";
 import { BsSuitHeart } from "react-icons/bs";
-import { IoMdCloseCircle } from "react-icons/io";
+
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { changeLike } from "./store/Data";
@@ -10,6 +10,7 @@ import { Routes, Route, useNavigate, useParams } from "react-router-dom";
 import ItemComponent from "./components/ItemComponent";
 import Collection from "./components/Collection";
 import Detail from "./components/Detail";
+import CollectionList from "./components/collectionList";
 
 function App() {
   let navigate = useNavigate();
@@ -105,51 +106,13 @@ function App() {
             }
           />
         </Routes>
-        <List>
-          <H1
-            onClick={() => {
-              navigate("/collection");
-            }}
-          >
-            Collection
-          </H1>
-          <Item>
-            <Over>
-              {state.data.map(
-                (v, i) =>
-                  state.data[i].like && (
-                    <CloseBox
-                      key={i}
-                      onClick={() => {
-                        clickHandler(i);
-                      }}
-                    >
-                      <ItemComponent
-                        color={state.data[i].color}
-                        w="50px"
-                        h="50px"
-                        className="hoverImg"
-                      ></ItemComponent>
-                      <IoMdCloseCircle
-                        size="18"
-                        className="close"
-                        // onMouseOver={({ target }) =>
-                        //   (target.style.display = "block")
-                        // }
-                        // onMouseOut={({ target }) =>
-                        //   (target.style.visibility = "visible")
-                        // }
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          deleteHandler(i);
-                        }}
-                      />
-                    </CloseBox>
-                  ),
-              )}
-            </Over>
-          </Item>
-        </List>
+        <CollectionList
+          collectionState={state}
+          handlers={{
+            onClick: clickHandler,
+            onDelete: deleteHandler,
+          }}
+        />
       </Section>
     </Container>
   );
@@ -194,59 +157,6 @@ const ColorWrapper = styled.div`
   flex-wrap: wrap;
   gap: 30px;
   height: 300px;
-`;
-
-const List = styled.div`
-  height: 100%;
-  padding: 30px 70px;
-`;
-
-const H1 = styled.h1`
-  font-size: 20px;
-  cursor: pointer;
-  height: 30px;
-`;
-
-const Item = styled.div`
-  display: flex;
-  height: 150px;
-  width: 240px;
-`;
-
-const Over = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-  flex-wrap: wrap;
-`;
-
-const CloseBox = styled.span`
-  height: 20px;
-  margin-bottom: 50px;
-
-  & > .close {
-    /* visibility: hidden; */
-    /* display: block; */
-    position: relative;
-    bottom: 65px;
-    left: 45px;
-    height: 20px;
-  }
-
-  &:hover {
-    cursor: pointer;
-    display: block;
-
-    .close {
-      display: block;
-      position: relative;
-      bottom: 65px;
-      left: 45px;
-      height: 20px;
-      padding: 0;
-      margin: 0;
-    }
-  }
 `;
 
 const Like = styled.div`
