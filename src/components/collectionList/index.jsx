@@ -31,7 +31,7 @@ const CollectionList = ({ collectionState, handlers }) => {
                 <li
                   key={i}
                   onClick={() => {
-                    handlers?.clickHandler(i);
+                    handlers?.onClick(i);
                   }}
                 >
                   <ItemComponent
@@ -40,48 +40,18 @@ const CollectionList = ({ collectionState, handlers }) => {
                     h="50px"
                     className="hoverImg"
                   ></ItemComponent>
-                  <IoMdCloseCircle
-                    size="18"
-                    className="close"
+                  <button
                     onClick={(e) => {
                       e.stopPropagation();
-                      handlers?.deleteHandler(i);
+                      handlers?.onDelete(i);
                     }}
-                  />
+                  >
+                    <IoMdCloseCircle size="18" className="close" />
+                  </button>
                 </li>
               )
           )}
         </ItemList>
-        {/* <Item>
-          <Over>
-            {collectionState.data.map(
-              (v, i) =>
-                collectionState.data[i].like && (
-                  <CloseBox
-                    key={i}
-                    onClick={() => {
-                      handlers?.clickHandler(i);
-                    }}
-                  >
-                    <ItemComponent
-                      color={collectionState.data[i].color}
-                      w="50px"
-                      h="50px"
-                      className="hoverImg"
-                    ></ItemComponent>
-                    <IoMdCloseCircle
-                      size="18"
-                      className="close"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handlers?.deleteHandler(i);
-                      }}
-                    />
-                  </CloseBox>
-                )
-            )}
-          </Over>
-        </Item> */}
       </List>
     </>
   );
@@ -111,86 +81,26 @@ const ItemList = styled.ul`
   & > li {
     position: relative;
 
-    & > svg {
+    & > button {
+      color: #000000b0;
+      opacity: 0;
+      transition: opacity 0.1s;
+    }
+    &:hover {
+      button {
+        opacity: 1 !important;
+      }
+    }
+
+    & > button {
+      cursor: pointer;
       position: absolute;
       top: 4px;
       right: 4px;
-    }
-  }
-`;
-
-const Item = styled.div`
-  display: flex;
-  width: 240px;
-`;
-
-const Over = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-  flex-wrap: wrap;
-  svg {
-    color: #0000008a;
-    opacity: 1;
-    transition: opacity 0.1s;
-  }
-  &:hover {
-    svg {
-      opacity: 1 !important;
-    }
-  }
-`;
-
-const CollectItem = styled.div`
-  & > .close {
-    /* visibility: hidden; */
-    /* display: block; */
-    position: relative;
-    bottom: 65px;
-    left: 45px;
-    height: 20px;
-  }
-
-  &:hover {
-    cursor: pointer;
-    display: block;
-
-    .close {
-      display: block;
-      position: relative;
-      bottom: 65px;
-      left: 45px;
-      height: 20px;
-      padding: 0;
-      margin: 0;
-    }
-  }
-`;
-const CloseBox = styled.span`
-  height: 20px;
-  margin-bottom: 50px;
-
-  & > .close {
-    /* visibility: hidden; */
-    /* display: block; */
-    position: relative;
-    bottom: 65px;
-    left: 45px;
-    height: 20px;
-  }
-
-  &:hover {
-    cursor: pointer;
-    display: block;
-
-    .close {
-      display: block;
-      position: relative;
-      bottom: 65px;
-      left: 45px;
-      height: 20px;
-      padding: 0;
-      margin: 0;
+      background: none;
+      outline: none;
+      border: none;
+      padding: 0 0 4px 4px;
     }
   }
 `;
