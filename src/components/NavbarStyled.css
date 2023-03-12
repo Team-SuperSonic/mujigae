@@ -1,0 +1,187 @@
+nav {
+  display: flex;
+  align-items: center;
+  /* 같은 행으로 묶어줌 */
+  align-content: space-around;
+
+  justify-content: space-between;
+  background: violet; /*헤더 컬러*/
+  padding: 8px 40px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+}
+
+#navbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* logo */
+.logo {
+  padding-right: 64px;
+}
+.logoImg {
+  width: 141px;
+}
+
+/* searchbar */
+.middleContainer {
+  position: relative;
+  width: 100%;
+}
+.searchbar {
+  display: flex;
+  flex-direction: row;
+  border-radius: 40px;
+  border: 1px solid #ececec;
+  background-color: #fff;
+  display: flex;
+  width: 100%;
+  height: 38px;
+  overflow: hidden;
+}
+/* search icon */
+/* .fa.fa-search {
+  width: 46px;
+  height: 100%;
+  padding-top: 15px;
+  flex-shrink: 0;
+} */
+
+/* 아이콘 */
+
+.searchIcon {
+  width: auto;
+  height: auto;
+  max-width: 20px;
+  max-height: 20px;
+  padding-top: 8px;
+  padding-left: 8px;
+  flex-shrink: 0;
+}
+
+.inputSearch {
+  width: 100%;
+  border-radius: 50px;
+  border: rgba(0, 0, 0, 0);
+}
+
+/* 드롭다운 */
+.modal-body {
+  position: absolute;
+  gap: 6px;
+  top: 46px;
+  width: calc(100% - 20px);
+  background: pink;
+  height: 500px;
+}
+
+/* 오른쪽 ul li 'littleMune' */
+
+#littleMenu li {
+  /*글자 사이 간격 padding 주기*/
+  list-style: none;
+  padding: 0 26px;
+  position: relative;
+}
+
+#littleMenu li a {
+  text-decoration: none;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+#littleMenu li a:hover,
+#littleMenu li a:active {
+  /*hover시 컬러 넣기*/
+  color: royalblue;
+}
+#littleMenu li a:hover::after,
+#littleMenu li a:active::after {
+  /*hover시 언더라인 넣기*/
+  content: "";
+  width: 70%;
+  height: 2px;
+  background: royalblue;
+  position: absolute;
+  bottom: -4px;
+  left: 20px;
+}
+
+/* 햅버거바 안보이게 */
+#mobile {
+  display: none;
+}
+
+/* 햄버거바 컬러 */
+#mobile i {
+  color: #fff;
+  align-items: center;
+}
+
+#littleMenu {
+  display: flex;
+  flex-direction: row;
+}
+
+/* 돋보기 아이콘 안보이게하는거 */
+.hidden {
+  opacity: 0;
+  margin-left: -34px;
+  transition: 0.3s ease-in-out;
+}
+
+/* 반응형 햄버거바 클릭시 나오는 사이드바? */
+@media screen and (max-width: 769px) {
+  #littleMenu {
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    position: fixed;
+    top: 54px;
+    width: 200px;
+    height: 140px;
+    display: none;
+    background: #2a3239;
+    box-shadow: 0 40px 60px rgba(0, 0, 0, 0.1);
+    transition: 0.3s ease-in-out;
+    padding-bottom: 6px;
+  }
+  /* 누르면 나오는 햄버거바 */
+  #littleMenu.active {
+    right: 0px;
+    display: flex;
+  }
+
+  #littleMenu li {
+    /* margin-bottom: 25px; */
+  }
+
+  #mobile {
+    display: block;
+    min-width: 60px;
+    text-align: right;
+  }
+
+  #mobile i {
+    font-size: 24px;
+    cursor: pointer;
+  }
+}
+
+/* 태그들 */
+.badges {
+  padding: 24px 30px;
+  display: flex;
+  gap: 12px;
+  /* 태그 넘치는 거 밑으로 보내기 */
+  flex-wrap: wrap;
+}
+
+.badges span {
+  border: 1px solid white;
+  border-radius: 25%;
+  padding: 6px 12px;
+  background-color: white;
+}
