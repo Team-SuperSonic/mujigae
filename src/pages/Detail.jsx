@@ -2,7 +2,7 @@
 
 import React from "react";
 import styled from "styled-components";
-import ItemComponent from "../components/common/ItemComponent";
+import { ItemComponent } from "components/common";
 
 export default function Detail({ color }) {
   return (
