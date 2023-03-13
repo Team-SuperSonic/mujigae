@@ -12,10 +12,10 @@ const getRandomData = () => {
     likes: 0,
     isLike: false,
     palette: [
-      { code: getColorCode() },
-      { code: getColorCode() },
-      { code: getColorCode() },
-      { code: getColorCode() },
+      { colorCode: getColorCode() },
+      { colorCode: getColorCode() },
+      { colorCode: getColorCode() },
+      { colorCode: getColorCode() },
     ],
   };
 };

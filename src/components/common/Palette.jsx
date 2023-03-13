@@ -6,8 +6,8 @@ const Palette = ({ data }, ref) => {
   return (
     <StyledWrapper ref={ref}>
       {data?.palette?.map((item) => (
-        <StyledPlace key={item.id + "place"} bgColor={item.code}>
-          <CopyToClipboard copyData={item.code}>{item.code}</CopyToClipboard>
+        <StyledPlace key={item.id + "place"} bgColor={item.colorCode}>
+          <CopyToClipboard copyData={item.colorCode}>{item.colorCode}</CopyToClipboard>
         </StyledPlace>
       ))}
     </StyledWrapper>
