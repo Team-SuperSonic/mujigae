@@ -6,17 +6,12 @@ import styled from "styled-components";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Routes, Route, useNavigate, useParams } from "react-router-dom";
-import { changeLike } from "../store/Data";
+import { changeLike } from "store/Data";
 
-import Collection from "../pages/Collection";
-import Detail from "../pages/Detail";
-import Header from "../components/main/Header";
-import CollectionList from "../components/main/CollectionList";
-import ItemsList from "../components/main/ItemsList";
+import { Collection, Detail } from "pages";
+import { Header, CollectionList, ItemsList } from "components/main";
 
-import ItemComponent from "../components/common/ItemComponent";
-
-function App() {
+function Main() {
   let navigate = useNavigate();
   let dispatch = useDispatch();
   const palletes = useSelector(({ data }) => data);
@@ -58,10 +53,7 @@ function App() {
               />
             }
           />
-          <Route
-            path="/collection"
-            element={<Collection collectionState={palletes} />}
-          ></Route>
+          <Route path="/collection" element={<Collection collectionState={palletes} />}></Route>
           <Route path="/detail/*" element={<Detail color={code} />}></Route>
           <Route path="/detail/:colorCode" element={<Detail color={code} />} />
         </Routes>
@@ -77,7 +69,7 @@ function App() {
   );
 }
 
-export default App;
+export default Main;
 
 const Container = styled.div`
   width: 100%;

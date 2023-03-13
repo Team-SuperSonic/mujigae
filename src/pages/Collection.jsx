@@ -3,9 +3,9 @@
 import React from "react";
 import styled from "styled-components";
 import { BsSuitHeartFill } from "react-icons/bs";
-import ItemComponent from "../components/common/ItemComponent";
+import { ItemComponent } from "components/common";
 import { useSelector, useDispatch } from "react-redux";
-import { changeLike } from "../store/Data";
+import { changeLike } from "store/Data";
 
 export default function Collection({ collectionState }) {
   let dispatch = useDispatch();
@@ -37,8 +37,7 @@ export default function Collection({ collectionState }) {
               <Like
                 onClick={() => {
                   likeHandler(likeArr[i].id);
-                }}
-              >
+                }}>
                 <BsSuitHeartFill size="20" />
                 <div>Like</div>
               </Like>

@@ -1,6 +1,6 @@
 import React, { forwardRef } from "react";
 import styled, { keyframes } from "styled-components";
-import CopyToClipboard from "./CopyToClipboard";
+import { CopyToClipboard } from "components/common";
 
 const Palette = ({ data }, ref) => {
   return (
