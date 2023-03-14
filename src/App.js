@@ -1,6 +1,6 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
-import Main from "./pages/Main";
+import { Main } from "pages";
 
 function App() {
   return (
@@ -11,5 +11,3 @@ function App() {
 }
 
 export default App;
-
-// BRANCH test
