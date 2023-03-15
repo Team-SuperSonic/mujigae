@@ -1,16 +1,29 @@
 // 시온
 
-import React from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
-import { ItemComponent } from "components/common";
+
+import { Palette } from "components/main";
+import { CopyToClipboard, CreatedAt, DownloadPalette } from "components/common";
+import { useDummy } from "components/hooks";
 
 export default function Detail({ color }) {
+  const dummy = useDummy();
+  const ref = useRef();
+
   return (
     <Container>
       <Content>
         <ItemWrapper>
-          <ItemComponent color={color} w="440px" h="440px" />
-          <Title>{color}</Title>
+          <Palette colors={dummy[0].palette} ref={ref}>
+            <CopyToClipboard />
+          </Palette>
+          <Title>
+            <DownloadPalette ref={ref} id={dummy[0].id}>
+              hihi
+            </DownloadPalette>
+            <CreatedAt createdAt={dummy[0].createdAt} />
+          </Title>
         </ItemWrapper>
       </Content>
     </Container>
