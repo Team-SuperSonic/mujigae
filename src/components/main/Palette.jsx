@@ -1,79 +1,48 @@
 import React, { forwardRef } from "react";
-import styled, { keyframes } from "styled-components";
-import { CopyToClipboard } from "components/common";
+import styled from "styled-components";
+import { Color, CopyToClipboard } from "components/common";
 
-const Palette = ({ data }, ref) => {
+const S = {};
+
+const Palette = ({ colors, children }, ref) => {
+  try {
+    React.Children.only(children);
+  } catch (error) {
+    console.error(error);
+  }
+
   return (
-    <StyledWrapper ref={ref}>
-      {data?.palette?.map((item) => (
-        <StyledPlace key={item.id + "place"} bgColor={item.code}>
-          <CopyToClipboard copyData={item.code}>{item.code}</CopyToClipboard>
-        </StyledPlace>
+    <S.PaletteLayout ref={ref}>
+      {colors?.map((color) => (
+        <Color key={color.id} colorCode={color.colorCode}>
+          {children?.type === CopyToClipboard && (
+            <CopyToClipboard copyData={color.colorCode.replace(/^#/, "").toUpperCase()}>
+              {color.colorCode.toUpperCase()}
+            </CopyToClipboard>
+          )}
+        </Color>
       ))}
-    </StyledWrapper>
+    </S.PaletteLayout>
   );
 };
 
-const StyledFadeOut = keyframes`
-0% {
-  opacity: 0;
-}
-50% {
-  opacity: 1;
-}
-100% {
-  opacity: 0;
-}
-`;
-
-const StyledWrapper = styled.div`
+S.PaletteLayout = styled.div`
   width: 492px;
   height: 492px;
   border-radius: 10px;
   overflow: hidden;
-`;
 
-const StyledPlace = styled.div`
-  position: relative;
-  width: 100%;
-  height: 25%;
-  background-color: ${({ bgColor }) => bgColor};
-
-  &:hover > button {
-    opacity: 1;
-  }
-
-  & > button {
-    cursor: pointer;
-    padding: 3px 6px;
-    position: absolute;
-    border-radius: 0 6px 0 0;
-    opacity: 0;
-    bottom: 0;
-    transition: opacity ease-in-out 0.2s;
-    background-color: rgba(0, 0, 0, 0.1);
-    outline: none;
-    border: none;
-    color: #ffffff;
-
-    &:after {
-      content: "Copied";
-      position: absolute;
-      background-color: #000000;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      opacity: 0;
-      animation: ${StyledFadeOut} 2s;
-    }
-
-    &:after:active {
+  & > div:hover {
+    & > button {
       opacity: 1;
     }
+  }
+
+  & button {
+    position: absolute;
+    bottom: 0;
+    opacity: 0;
+    transition: opacity 0.2s;
   }
 `;
 
