@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
+import { useState } from "react";
 
 import { BsSuitHeartFill } from "react-icons/bs";
 import { BsSuitHeart } from "react-icons/bs";
@@ -7,6 +8,25 @@ import { BsSuitHeart } from "react-icons/bs";
 import ItemComponent from "../common/ItemComponent";
 
 export default function ItemsList({ collectionState, handlers }) {
+  const [likeArr, setLikeArr] = useState([]);
+
+  const onPush = (idx) => {
+    let copy = [...collectionState];
+
+    likeArr.push(copy[idx]);
+    setLikeArr(likeArr);
+
+    const newArr = likeArr.filter((v1, i1) => {
+      return (
+        likeArr.findIndex((v2, i2) => {
+          return v1.id === v2.id;
+        }) == i1
+      );
+    });
+
+    setLikeArr(newArr);
+  };
+
   return (
     <Wrapper>
       <ColorWrapper>
@@ -27,6 +47,7 @@ export default function ItemsList({ collectionState, handlers }) {
             <Like
               onClick={() => {
                 handlers?.onLike(i);
+                onPush(i);
               }}
             >
               {collectionState[i].like ? (
