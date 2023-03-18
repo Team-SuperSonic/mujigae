@@ -4,19 +4,22 @@ import { Color, CopyToClipboard } from "components/common";
 
 const S = {};
 
-const Palette = ({ colors, children }, ref) => {
+const Palette = ({ colors, children, w, h }, ref) => {
   try {
-    React.Children.only(children);
+    // error 떠서 잠시 주석처리
+    // React.Children.only(children);
   } catch (error) {
     console.error(error);
   }
 
   return (
-    <S.PaletteLayout ref={ref}>
+    <S.PaletteLayout ref={ref} w={w} h={h}>
       {colors?.map((color) => (
         <Color key={color.id} colorCode={color.colorCode}>
           {children?.type === CopyToClipboard && (
-            <CopyToClipboard copyData={color.colorCode.replace(/^#/, "").toUpperCase()}>
+            <CopyToClipboard
+              copyData={color.colorCode.replace(/^#/, "").toUpperCase()}
+            >
               {color.colorCode.toUpperCase()}
             </CopyToClipboard>
           )}
@@ -27,8 +30,8 @@ const Palette = ({ colors, children }, ref) => {
 };
 
 S.PaletteLayout = styled.div`
-  width: 492px;
-  height: 492px;
+  width: ${({ w }) => w};
+  height: ${({ h }) => h};
   border-radius: 10px;
   overflow: hidden;
 

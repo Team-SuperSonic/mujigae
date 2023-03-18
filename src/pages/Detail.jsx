@@ -4,25 +4,26 @@ import React, { useRef } from "react";
 import styled from "styled-components";
 
 import { Palette } from "components/main";
-import { CopyToClipboard, CreatedAt, DownloadPalette } from "components/common";
-import { useDummy } from "components/hooks";
+import { useParams } from "react-router-dom";
 
-export default function Detail({ color }) {
-  const dummy = useDummy();
+import { CopyToClipboard, CreatedAt, DownloadPalette } from "components/common";
+
+export default function Detail({ items }) {
   const ref = useRef();
+  let { idx } = useParams();
 
   return (
     <Container>
       <Content>
         <ItemWrapper>
-          <Palette colors={dummy[0].palette} ref={ref}>
+          <Palette colors={items[idx].palette} w="492px" h="492px" ref={ref}>
             <CopyToClipboard />
           </Palette>
           <Title>
-            <DownloadPalette ref={ref} id={dummy[0].id}>
+            <DownloadPalette ref={ref} id={items[idx].id}>
               hihi
             </DownloadPalette>
-            <CreatedAt createdAt={dummy[0].createdAt} />
+            <CreatedAt createdAt={items[idx].createdAt} />
           </Title>
         </ItemWrapper>
       </Content>

@@ -3,41 +3,37 @@
 import React from "react";
 import styled from "styled-components";
 import { BsSuitHeartFill } from "react-icons/bs";
-import { ItemComponent } from "components/common";
-import { useSelector, useDispatch } from "react-redux";
-import { changeLike } from "store/Data";
+import Palette from "../components/main/Palette";
 
-export default function Collection({ collectionState }) {
-  let dispatch = useDispatch();
+export default function Collection({ items, handlers }) {
+  const likeArr = items.filter((e) => e.isLike);
 
-  const likeHandler = (i) => {
-    dispatch(changeLike(i - 1));
-  };
-
-  const likeArr = [];
-  collectionState.forEach((v) => v.like && likeArr.push(v));
+  console.log(likeArr);
 
   return (
     <Container>
       <Title>
         <H1>My collection</H1>
-        <Span>{collectionState?.filter((e) => e.like).length} palette</Span>
+        <Span>{likeArr.length} palette</Span>
       </Title>
       <Line></Line>
       <Content>
         {likeArr.map((v, i) => (
           <ItemWrapper key={i}>
             <div>
-              <ItemComponent
-                color={likeArr[i].color}
+              <Palette
+                colors={likeArr[i].palette}
                 w="220px"
                 h="220px"
                 style={{ margin: "0 10px" }}
               />
               <Like
                 onClick={() => {
-                  likeHandler(likeArr[i].id);
-                }}>
+                  //? 다시 생각해보기 !
+                  handlers?.onLike(i);
+                  console.log(likeArr[i]);
+                }}
+              >
                 <BsSuitHeartFill size="20" />
                 <div>Like</div>
               </Like>
