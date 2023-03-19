@@ -1,37 +1,86 @@
 // 채린
 
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 
 import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import { Routes, Route, useNavigate, useParams } from "react-router-dom";
-import { changeLike } from "store/Data";
 
 import { Collection, Detail } from "pages";
 import { Header, CollectionList, ItemsList } from "components/main";
 
+import { useDummy } from "components/hooks";
+
 function Main() {
   let navigate = useNavigate();
-  let dispatch = useDispatch();
-  const palletes = useSelector(({ data }) => data);
 
-  let { colorCode } = useParams();
+  const dummy = useDummy();
+  let dummyItems = useDummy(20);
 
-  let [code, setCode] = useState("");
+  const [items, setItems] = useState(dummyItems);
+
+  let [watch, setWatch] = useState([]);
+  // let [cnt, setCnt] = useState(0);
+
+  useEffect(() => {
+    let watched = localStorage.getItem("dummy", watch);
+
+    // 안봤으면 : 새 dummy data 넣어주기
+    if (watched === null) {
+      localStorage.setItem("dummy", JSON.stringify(dummyItems));
+    } else if (items !== watch) {
+      let edit = JSON.parse(localStorage.getItem("dummy"));
+      // edit = watch;
+      // localStorage.setItem("dummy", JSON.stringify(edit));
+    }
+
+    // item에 처음 받아온 dummy data 넣어주기
+    let 꺼낸거 = JSON.parse(localStorage.getItem("dummy"));
+    setItems(꺼낸거);
+  }, []);
 
   const clickHandler = (i) => {
-    colorCode = palletes[i].color;
-    navigate(`/detail/${colorCode}`);
-    setCode(colorCode);
+    // 클릭한 index를 parameter로 가져옴
+    navigate(`/detail/${i}`);
   };
 
   const deleteHandler = (i) => {
-    dispatch(changeLike(i));
+    items[i].isLike = !items[i].isLike;
+    setItems(items);
+    setWatch(JSON.stringify(items));
   };
 
   const likeHandler = (i) => {
-    dispatch(changeLike(i));
+    items[i].isLike = !items[i].isLike;
+    setItems(items);
+    setWatch(JSON.stringify(items));
+
+    //? 새로고침 후 좋아요 값 유지
+    // localStorage
+    // get set
+
+    //? likeArr
+  };
+
+  let [likeArr, setLikeArr] = useState([]);
+
+  const pushHandler = (idx) => {
+    let copy = [...dummyItems];
+
+    likeArr.push(copy[idx]);
+    setLikeArr(likeArr);
+
+    const newArr = likeArr.filter((v1, i1) => {
+      return (
+        likeArr.findIndex((v2, i2) => {
+          return v1.id === v2.id;
+        }) == i1
+      );
+    });
+
+    setLikeArr(newArr);
+
+    console.log(newArr);
   };
 
   return (
@@ -45,20 +94,35 @@ function Main() {
             path="/*"
             element={
               <ItemsList
-                collectionState={palletes}
+                dummyItems={dummyItems}
+                items={items}
                 handlers={{
                   onClick: clickHandler,
                   onLike: likeHandler,
+                  onPush: pushHandler,
                 }}
               />
             }
           />
-          <Route path="/collection" element={<Collection collectionState={palletes} />}></Route>
-          <Route path="/detail/*" element={<Detail color={code} />}></Route>
-          <Route path="/detail/:colorCode" element={<Detail color={code} />} />
+          <Route
+            path="/collection"
+            element={
+              <Collection
+                items={items}
+                handlers={{
+                  onLike: likeHandler,
+                }}
+              />
+            }
+          ></Route>
+          <Route path="/detail/*" element={<Detail />}></Route>
+          <Route
+            path="/detail/:idx"
+            element={<Detail items={items} dummyItems={dummyItems} />}
+          />
         </Routes>
         <CollectionList
-          collectionState={palletes}
+          items={items}
           handlers={{
             onClick: clickHandler,
             onDelete: deleteHandler,

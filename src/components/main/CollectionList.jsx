@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import ItemComponent from "../common/ItemComponent";
 import { IoMdCloseCircle } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
+import Palette from "./Palette";
 
-const CollectionList = ({ collectionState, handlers }) => {
+const CollectionList = ({ items, handlers }) => {
   let navigate = useNavigate();
 
   return (
@@ -17,20 +17,16 @@ const CollectionList = ({ collectionState, handlers }) => {
         Collection
       </H1>
       <ItemList>
-        {collectionState.map(
+        {items.map(
           (v, i) =>
-            collectionState[i].like && (
-              <li
+            items[i].isLike && (
+              <Li
                 key={i}
                 onClick={() => {
                   handlers?.onClick(i);
                 }}
               >
-                <ItemComponent
-                  color={collectionState[i].color}
-                  w="50px"
-                  h="50px"
-                ></ItemComponent>
+                <Palette colors={items[i].palette} w="50px" h="50px"></Palette>
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
@@ -39,7 +35,7 @@ const CollectionList = ({ collectionState, handlers }) => {
                 >
                   <IoMdCloseCircle size="18" />
                 </button>
-              </li>
+              </Li>
             ),
         )}
       </ItemList>
@@ -58,6 +54,10 @@ const H1 = styled.h1`
   font-size: 20px;
   cursor: pointer;
   height: 30px;
+`;
+
+const Li = styled.li`
+  cursor: pointer;
 `;
 
 const ItemList = styled.ul`

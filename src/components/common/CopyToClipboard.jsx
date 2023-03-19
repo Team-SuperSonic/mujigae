@@ -20,11 +20,13 @@ const CopyToClipboard = ({ copyData, children, ...props }) => {
 
   return (
     <S.CopyButton
-      onClick={() => {
+      onClick={(e) => {
+        e.stopPropagation();
         handleCopy(copyData);
       }}
       isCopy={isCopy}
-      className={props.className}>
+      className={props.className}
+    >
       {children}
     </S.CopyButton>
   );
