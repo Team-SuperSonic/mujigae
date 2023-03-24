@@ -113,13 +113,9 @@ function Main() {
                   onLike: likeHandler,
                 }}
               />
-            }
-          ></Route>
+            }></Route>
           <Route path="/detail/*" element={<Detail />}></Route>
-          <Route
-            path="/detail/:idx"
-            element={<Detail items={items} dummyItems={dummyItems} />}
-          />
+          <Route path="/detail/:idx" element={<Detail items={items} dummyItems={dummyItems} />} />
         </Routes>
         <CollectionList
           items={items}
@@ -146,6 +142,7 @@ const Section = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
+  padding-top: 58px;
 `;
 
 const Menu = styled.div`
