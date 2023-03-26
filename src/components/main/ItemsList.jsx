@@ -9,14 +9,14 @@ import { Palette } from "components/main";
 import { CopyToClipboard, CreatedAt, DownloadPalette } from "components/common";
 import { useNavigate } from "react-router";
 
-export default function ItemsList({ dummyItems, items, handlers }) {
+export default function ItemsList({ items, handlers }) {
   // state를 사용해야, 전부 다시 리렌더링 해줌 ! (좋아요 표시)
   const [show, setShow] = useState(false);
   let navigate = useNavigate();
 
   return (
     <Wrapper>
-      {items.map((v, i) => (
+      {items?.map((v, i) => (
         <Li key={i}>
           <div style={{ display: "flex", flexDirection: "column" }}>
             <div

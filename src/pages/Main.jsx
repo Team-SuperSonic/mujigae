@@ -1,43 +1,64 @@
-// 채린
-
 import React, { useEffect } from "react";
 import styled from "styled-components";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { Routes, Route, useNavigate, useParams } from "react-router-dom";
 
 import { Collection, Detail } from "pages";
 import { Header, CollectionList, ItemsList } from "components/main";
 
-import { useDummy } from "components/hooks";
+import { useFetch } from "components/hooks";
 
 function Main() {
   let navigate = useNavigate();
 
-  const dummy = useDummy();
-  let dummyItems = useDummy(20);
+  const [items, setItems] = useState([]);
 
-  const [items, setItems] = useState(dummyItems);
-
-  let [watch, setWatch] = useState([]);
-  // let [cnt, setCnt] = useState(0);
+  const data = useFetch();
 
   useEffect(() => {
-    let watched = localStorage.getItem("dummy", watch);
-
-    // 안봤으면 : 새 dummy data 넣어주기
-    if (watched === null) {
-      localStorage.setItem("dummy", JSON.stringify(dummyItems));
-    } else if (items !== watch) {
-      let edit = JSON.parse(localStorage.getItem("dummy"));
-      // edit = watch;
-      // localStorage.setItem("dummy", JSON.stringify(edit));
-    }
-
-    // item에 처음 받아온 dummy data 넣어주기
-    let 꺼낸거 = JSON.parse(localStorage.getItem("dummy"));
-    setItems(꺼낸거);
+    data.then((v) => setItems(v));
   }, []);
+
+  console.log(items);
+
+  // let [watch, setWatch] = useState([]);
+
+  //   let watched = JSON.parse(localStorage.getItem("dummy"));
+  //   //   console.log(watched);
+  //   //   console.log(items);
+
+  //   //   // 안봤으면 : 새 dummy data 넣어주기
+  //   if (watched === null) {
+  //     //     // item 값 넣어줌
+  //     localStorage.setItem("dummy", JSON.stringify(loadedData));
+  //   } else if (watched === loadedData) {
+  //     localStorage.setItem("dummy", JSON.stringify(loadedData));
+
+  //     //     // items(초기 데이터...?)랑 다르면
+  //     //     // local Storage에 있는 수정된 값을 가져와서
+  //     // let edit = JSON.parse(localStorage.getItem("dummy"));
+
+  //     //     // 수정된 사항을 items state에 적용
+  //     // setItems(edit);
+
+  //     //     // edit = watch;
+  //     // localStorage.setItem("dummy", JSON.stringify(edit));
+  //     //     console.log("있음");
+  //   }
+
+  //   // item에 처음 받아온 dummy data 넣어주기
+  //   let 꺼낸거 = JSON.parse(localStorage.getItem("dummy"));
+  //   setItems(꺼낸거);
+  // });
+
+  // const reloadHandler = useCallback(() => {
+  //   // localStorage 데이터 가져오기
+
+  // useEffect(() => {
+  //   fetchHandler();
+  //   // reloadHandler();
+  // }, [fetchHandler]);
 
   const clickHandler = (i) => {
     // 클릭한 index를 parameter로 가져옴
@@ -47,13 +68,14 @@ function Main() {
   const deleteHandler = (i) => {
     items[i].isLike = !items[i].isLike;
     setItems(items);
-    setWatch(JSON.stringify(items));
+    // setWatch(JSON.stringify(items));
   };
 
   const likeHandler = (i) => {
     items[i].isLike = !items[i].isLike;
     setItems(items);
-    setWatch(JSON.stringify(items));
+    console.log(items);
+    // setWatch(JSON.stringify(items));
 
     //? 새로고침 후 좋아요 값 유지
     // localStorage
@@ -65,7 +87,7 @@ function Main() {
   let [likeArr, setLikeArr] = useState([]);
 
   const pushHandler = (idx) => {
-    let copy = [...dummyItems];
+    let copy = [...items];
 
     likeArr.push(copy[idx]);
     setLikeArr(likeArr);
@@ -94,7 +116,6 @@ function Main() {
             path="/*"
             element={
               <ItemsList
-                dummyItems={dummyItems}
                 items={items}
                 handlers={{
                   onClick: clickHandler,
@@ -113,9 +134,13 @@ function Main() {
                   onLike: likeHandler,
                 }}
               />
-            }></Route>
+            }
+          ></Route>
           <Route path="/detail/*" element={<Detail />}></Route>
-          <Route path="/detail/:idx" element={<Detail items={items} dummyItems={dummyItems} />} />
+          <Route
+            path="/detail/:idx"
+            element={<Detail items={items} setItems={setItems} />}
+          />
         </Routes>
         <CollectionList
           items={items}

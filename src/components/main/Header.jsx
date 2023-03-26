@@ -1,12 +1,20 @@
 import React from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 const S = {};
 
 const Header = () => {
+  let navigate = useNavigate();
   return (
     <S.Header>
-      <S.Left>mujigae</S.Left>
+      <S.Left
+        onClick={() => {
+          navigate("/");
+        }}
+      >
+        mujigae
+      </S.Left>
     </S.Header>
   );
 };
@@ -41,6 +49,7 @@ S.Header = styled.div`
 S.Left = styled.div`
   font-weight: 700;
   font-size: 20px;
+  cursor: pointer;
 `;
 
 export default Header;

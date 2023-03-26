@@ -1,6 +1,6 @@
 // 시온
 
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import styled from "styled-components";
 
 import { Palette } from "components/main";
@@ -8,9 +8,19 @@ import { useParams } from "react-router-dom";
 
 import { CopyToClipboard, CreatedAt, DownloadPalette } from "components/common";
 
-export default function Detail({ items }) {
+export default function Detail({ items, setItems }) {
   const ref = useRef();
   let { idx } = useParams();
+
+  // const reloadHandler = () => {
+  //   let reload = JSON.parse(localStorage.getItem("dummy"))[idx];
+  //   setItems(reload);
+  //   console.log(items);
+  // };
+
+  // useEffect(() => {
+  //   reloadHandler();
+  // }, []);
 
   return (
     <Container>
